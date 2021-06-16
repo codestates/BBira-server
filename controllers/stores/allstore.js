@@ -1,29 +1,53 @@
-const { user, store, tag, item } = require('../../models');
+const { user, store, item, tag, tag_store } = require('../../models');
 const jwt = require('jsonwebtoken');
 const dotenv = require("dotenv");
+const path = require('path')
 dotenv.config();
+const fs = require("fs") 
+const imageDataUri = require("image-data-uri")
 
-module.exports = (req, res) => {
-    // "/allstoredata" 최초 모든 데이터베이스 데이터 전달
-    // 모든 정보를 순서대로 배열에 담아서 합쳐서 
-// [
-//   {
-//     "message": 'ok', 
-//     "data": 
-//    {
-//       tagname: "cat"
-//       storename: "Doraemon shop"
-//       itemname: "Doraemon doll"
-//       itemphoto: "Doraemon.jpg"
-//       itemdesc: "Doraemon shop beat seller"
-//       itemprice: "20,000"
-//       phone: "010-1234-5678"    
-//     } 
-//   }
-// ]
-//  findAll 상호명이 같은 store 테이블에서 phone을 가져오고
-//           store 테이블의 id와 item 테이블의 store_id가 같은 item 테이블에서
-//           정보 4개를 가져오고, 
-//           store(id)와 tag_store의 store_id가 같은 행을 모두 찾고
-//           
+module.exports = async (req, res) => {
+
+    const allstoreInfo = await store.findAll()
+    const hasNameStore = allstoreInfo.filter(el => el.dataValues.storename !== '')
+    const StoreDataToMakeResult = hasNameStore.map(el => el.dataValues)
+    const result = [];
+    for (let shop of StoreDataToMakeResult) {
+
+        const alltagIdInfo = await tag_store.findAll({ where: { storeId: shop.id }})
+        const tagsId = alltagIdInfo.map(el => el.dataValues.tagId)
+        const tags = [];
+        for (let el of tagsId) {
+            let tagInfo = await tag.findOne({ where: { id: el }})
+            tags.push(tagInfo.dataValues)
+        }
+
+        const allitemsInfo = await item.findAll({ where: { storeId: shop.id } })
+
+        const items = allitemsInfo.map(el => {
+            let result = fs.readFileSync(`.${el.dataValues.itemphoto}`)
+
+            let b = imageDataUri.encode(result, "jpg")
+        return {
+            ...el.dataValues,
+            itemphoto: b
+        }
+    })
+        
+
+        result.push({ shop, tags, items })
+    }
+    return res.status(200).send({ message: "ok", data: result })
+    
+    res.status(500).send({ "message": "Internal Server Error" })
 }
+
+// let reader = new FileReader()
+// const items = allitemsInfo.map(el => {
+//     let data;
+//     reader.readAsDataURL(el.dataValues.itemphoto)
+//     reader.onload = (e) => {
+//         data = e.target.result 
+//     };
+
+// })

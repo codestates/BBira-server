@@ -1,52 +1,57 @@
 const express = require('express');
 const cors = require("cors");
-const https = require('https');
-const fs = require('fs');
 const controllers = require("./controllers");
 require('dotenv').config()
-const session = require('express-session');
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
+const models = require('./models');
+
+const multer = require('multer')
+const upload = multer({ dest: 'uploads/' })
+const fs = require("fs") 
 
 const app = express();
 
+// models.sequelize.sync()
+//   .then(() => {
+//     console.log('✓ DB connection success.');
+//     console.log('  Press CTRL-C to stop\n');
+//   })
+//   .catch(err => {
+//     console.error(err);
+//     console.log('✗ DB connection error. Please make sure DB is running.');
+//     process.exit();
+//   });
+
 app.use(express.json())
 app.use(cors({
-    origin: true,
-    methods: ["GET", "POST", "OPTIONS"],
+    origin: "http://localhost:3000", // 배포환경 : s3 도메인
+    methods: ["GET", "POST", "OPTIONS", "DELETE"],
     credentials: true
 }))
 
-const port = 3000; //배포환경시 80
+app.use(cookieParser());
 
-app.use(
-  session({
-    secret: '@BBira',
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-      domain: 'localhost',
-      path: '/',
-      maxAge: 24 * 6 * 60 * 1000000000, // 나중에 줄여야함
-      // sameSite: 'None',
-      httpOnly: true,
-      // secure: true,
-    },
-  })
-);
+const port = 3000; //배포환경: 80
 
 // users //
-app.post("/fixuserinfo", controllers.fixuserinfo); // email, nickname, address, storename, phone
-app.post("/signup", controllers.signup); // email, nickname, address, storename, phone, password
-app.post("/login", controllers.login); // email, password
+app.post("/fixuserinfo", controllers.fixuserinfo); // tagname: arr, nickname: str, email: str, password: str, phone: str, address: str, storename: str
+app.post("/signup", controllers.signup); // tagname: arr, nickname: str, email: str, password: str, phone: str, address: str, storename: str
+app.post("/login", controllers.login); // email: str, password: str
 app.get("/logout", controllers.logout);
-app.post("/dropuser", controllers.dropuser); // email
+app.get("/dropuser", controllers.dropuser);
 app.get("/userinfo", controllers.userinfo);
+app.get("/refreshtokenrequest", controllers.refreshtokenrequest)
+app.post("/kakaologin", controllers.kakaologin);
+// app.post("/githublogin", controllers.githublogin);
 
 // stores //
-app.post("/fixiteminfo", controllers.fixiteminfo);
+app.post("/fixiteminfo", upload.single("userfile"), controllers.fixiteminfo);
+app.post("/itemregister", upload.single("userfile"), controllers.itemregister);
 app.post("/dropitem", controllers.dropitem);
-app.post("/allstore", controllers.allstore);
-app.post("/itemregister", controllers.itemregister);
-app.post("/mystore", controllers.mystore);
+app.get("/allstore", upload.single("userfile"), controllers.allstore);
+app.get("/mystore", upload.single("userfile"), controllers.mystore);
+
 
 
 let server;
@@ -62,5 +67,4 @@ let server;
   server = app.listen(port,() => {
     console.log(`http 서버가 ${port}번에서 작동중입니다.`);
   })
-
 // }

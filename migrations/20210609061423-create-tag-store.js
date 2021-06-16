@@ -8,10 +8,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      tag_id: {
+      tagId: {
         type: Sequelize.INTEGER
       },
-      store_id: {
+      storeId: {
         type: Sequelize.INTEGER
       },
       createdAt: {
@@ -23,6 +23,31 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
+
+    await queryInterface.addConstraint("tag_stores", {
+      fields: ["storeId"],
+      type: "foreign key",
+      name: "fk_tag_stores_stores",
+      references: {
+        table: "stores",
+        field: "id",
+      },
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    });
+
+    await queryInterface.addConstraint("tag_stores", {
+      fields: ["tagId"],
+      type: "foreign key",
+      name: "fk_tag_stores_tags",
+      references: {
+        table: "tags",
+        field: "id",
+      },
+      onDelete: "cascade",
+      onUpdate: "cascade",
+    });
+
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('tag_stores');

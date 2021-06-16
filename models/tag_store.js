@@ -10,12 +10,13 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+        models.tag_store.belongsTo(models.store, { foreignKey: "storeId", onDelete: 'CASCADE' })
+        models.tag_store.belongsTo(models.tag, { foreignKey: "tagId", onDelete: 'CASCADE' })
     }
   };
   tag_store.init({
-    tag_id: DataTypes.INTEGER,
-    store_id: DataTypes.INTEGER
+    tagId: DataTypes.INTEGER,
+    storeId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'tag_store',

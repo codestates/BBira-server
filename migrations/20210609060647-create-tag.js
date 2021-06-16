@@ -9,7 +9,9 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       tagname: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: ''
       },
       createdAt: {
         allowNull: false,

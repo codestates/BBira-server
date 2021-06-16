@@ -9,19 +9,28 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       itemname: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: ''
       },
       itemphoto: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(4000),
+        allowNull: false,
+        defaultValue: ''
       },
       itemdesc: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: ''
       },
       itemprice: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        defaultValue: ''
       },
-      store_id: {
-        type: Sequelize.INTEGER
+      storeId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
@@ -31,7 +40,20 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
+    })
+
+    await queryInterface.addConstraint("items", {
+      fields: ["storeId"],
+      type: "foreign key",
+      name: "fk_items_stores",
+      references: {
+        table: "stores",
+        field: "id",
+      },
+      onDelete: "cascade",
+      onUpdate: "cascade",
     });
+    
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('items');
