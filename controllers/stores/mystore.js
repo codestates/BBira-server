@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
     }
     else {
 
-        const allItemsInfo = await item.findAll({ where: { storeId: data.storeId } })
+        const allitemsInfo = await item.findAll({ where: { storeId: data.storeId } })
         
         const items = allitemsInfo.map(el => {
             let result = fs.readFileSync(`.${el.dataValues.itemphoto}`)
