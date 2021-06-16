@@ -21,7 +21,6 @@ module.exports = async (req, res) => {
     else {
 
         const allItemsInfo = await item.findAll({ where: { storeId: data.storeId } })
-        const items = allItemsInfo.map(el => el.dataValues)
         
         const items = allitemsInfo.map(el => {
             let result = fs.readFileSync(`.${el.dataValues.itemphoto}`)
@@ -37,10 +36,7 @@ module.exports = async (req, res) => {
 
         const alltagIdinfo = await tag_store.findAll({ where: { storeId: data.storeId } })
         const tagsId = alltagIdinfo.map(el => el.dataValues.tagId)
-
         
-
-
         const tags = [];
         for (let el of tagsId) {
             let taginfo = await tag.findOne({ where: { id: el } })

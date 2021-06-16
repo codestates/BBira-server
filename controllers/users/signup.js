@@ -18,8 +18,8 @@ module.exports = async (req, res) => {
             }
             const storeInfo = await store.create({ storename, address, phone })
             const storeId = storeInfo.dataValues.id
-//            const hash = crypto.createHmac('sha256', process.env.SALT).update(password).digest('hex');
-            await user.create({ email, password, nickname, storeId })
+            const hash = crypto.createHmac('sha256', process.env.SALT).update(password).digest('hex');
+            await user.create({ email, password: hash, nickname, storeId })
             return res.status(201).send({ "message": "signup successed" })
         })
         .catch(err => {
@@ -45,9 +45,8 @@ module.exports = async (req, res) => {
                     const taginfo = await tag.findOne({ where: { tagname: el } })
                     await tag_store.create({ storeId, tagId: taginfo.dataValues.id })
                 }
-//                const hash = crypto.createHmac('sha256', process.env.SALT).update(password).digest('hex');
-//                await user.create({ email, password: hash, nickname, storeId })
-                await user.create({ email, password, nickname, storeId })
+                const hash = crypto.createHmac('sha256', process.env.SALT).update(password).digest('hex');
+                await user.create({ email, password: hash, nickname, storeId })
                 res.status(201).send({ "message": "signup successed" })
             }
         })

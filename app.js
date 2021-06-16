@@ -23,11 +23,6 @@ const app = express();
 //     process.exit();
 //   });
 
-
-app.use("/itemregister", express.static("./uploads"))
-app.use("/allstore", express.static("./uploads"))
-app.use("/mystore", express.static("./uploads"))
-
 app.use(express.json())
 app.use(cors({
     origin: "http://localhost:3000", // 배포환경 : s3 도메인
@@ -48,7 +43,7 @@ app.get("/dropuser", controllers.dropuser);
 app.get("/userinfo", controllers.userinfo);
 app.get("/refreshtokenrequest", controllers.refreshtokenrequest)
 app.post("/kakaologin", controllers.kakaologin);
-app.post("/githublogin", controllers.githublogin);
+// app.post("/githublogin", controllers.githublogin);
 
 // stores //
 app.post("/fixiteminfo", upload.single("userfile"), controllers.fixiteminfo);

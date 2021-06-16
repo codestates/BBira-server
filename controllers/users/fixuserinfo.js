@@ -21,9 +21,9 @@ module.exports = async (req, res) => {
   if (data) {
 
     
-//    const hash = crypto.createHmac('sha256', process.env.SALT).update(password).digest('hex');
-//    await user.update({ nickname, password: hash }, { where: { id: data.id } })
-    await user.update({ nickname, password }, { where: { id: data.id } })
+    const hash = crypto.createHmac('sha256', process.env.SALT).update(password).digest('hex');
+    await user.update({ nickname, password: hash }, { where: { id: data.id } })
+
 
     await store.update({ phone, address, storename }, { where: { id: data.storeId } })
 
