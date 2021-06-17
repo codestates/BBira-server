@@ -1,4 +1,4 @@
-# BBira-server
+# BBira
 ![](https://img.shields.io/badge/Project-BBira-blueviolet?style=for-the-badge)
 ![](https://img.shields.io/badge/BBira-Web-black?style=for-the-badge)<br>
 ## Team logo<br>
