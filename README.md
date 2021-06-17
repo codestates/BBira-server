@@ -19,7 +19,6 @@
 
 
 ### BACK END<br>
-
 이찬양<br>
 박민규<br>
 ![](https://img.shields.io/badge/BACK-MySQL-99FFFF?style=for-the-badge&logo=mysql&logoColor=99FFFF%22)<br>
