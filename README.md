@@ -12,10 +12,15 @@
 ---
 # Tech Stack<br>
 ### FRONT END<br>
+손용휘<br>
+김솔희
 ![](https://img.shields.io/badge/front-REACT-blue?style=for-the-badge&logo=react&logoColor=white%22)<br>
 ![](https://img.shields.io/badge/front-axios-purple?style=for-the-badge)
 
+
 ### BACK END<br>
+이찬양<br>
+박민규
 ![](https://img.shields.io/badge/BACK-MySQL-99FFFF?style=for-the-badge&logo=mysql&logoColor=99FFFF%22)<br>
 ![](https://img.shields.io/badge/BACK-express-black?style=for-the-badge)<br>
 ![](https://img.shields.io/badge/BACK-axios-purple?style=for-the-badge)<br>
