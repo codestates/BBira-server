@@ -4,7 +4,13 @@
 ## Team logo<br>
 ![](https://github.com/codestates/BBira-server/blob/master/Wiki_image/logo.png)<br>
 ---
-## Tech Stack<br>
+## About Project<br>
+코로나가 오랫동안 지속되면서 힘들어하는 소상공인들을 도울 수 있는 웹 페이지를 만들고 싶어서 BBira를 기획하게 되었습니다.
+
+사업자가 주력 상품을 쉽게 등록 할 수 있는 기능이 있기 때문에 소비자에 다양한 상품을 보다 쉽게 홍보 할 수 있게 해줍니다!
+
+---
+# Tech Stack<br>
 ### FRONT END<br>
 ![](https://img.shields.io/badge/front-REACT-blue?style=for-the-badge&logo=react&logoColor=white%22)<br>
 ![](https://img.shields.io/badge/front-axios-purple?style=for-the-badge)
@@ -16,7 +22,7 @@
 ![](https://img.shields.io/badge/BACK-sequelize-blue?style=for-the-badge)<br><br>
 ![](https://github.com/codestates/BBira-server/blob/master/Wiki_image/Teah%20Stack.png)
 ---
-### Architecture<br>
+# Architecture<br>
 ![](https://github.com/codestates/BBira-server/blob/master/Wiki_image/%E1%84%8B%E1%85%A1%E1%84%8F%E1%85%B5%E1%84%90%E1%85%A6%E1%86%A8%E1%84%8E%E1%85%A7.png)
 ---
 ### Version<br>
